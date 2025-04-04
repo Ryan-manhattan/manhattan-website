@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Join</title>
+  <style>
+    body {
+      background-color: #4B3621;
+      font-family: 'DM Serif Display', serif;
+      color: #FFD700;
+      text-align: center;
+      padding-top: 150px;
+    }
+    .email {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .contact {
+      font-size: 22px;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="email">mirrorballmusic25@gmail.com</div>
+  <div class="contact">Contact me</div>
+
+</body>
+</html>
