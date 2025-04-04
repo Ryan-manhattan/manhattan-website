@@ -11,7 +11,7 @@
       color: #FFD700;
     }
     .blog-container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 80px auto;
       padding: 0 20px;
     }
@@ -21,15 +21,43 @@
       text-align: center;
     }
     .post {
+      display: flex;
+      gap: 30px;
       margin-bottom: 60px;
+      align-items: center;
     }
-    .post h2 {
+    .post-image {
+      flex: 1;
+    }
+    .post-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .post-content {
+      flex: 2;
+    }
+    .post-content h2 {
       font-size: 32px;
       margin-bottom: 10px;
     }
-    .post p {
+    .post-content p {
       font-size: 20px;
       line-height: 1.7;
+    }
+    .pagination {
+      text-align: center;
+      margin: 40px 0;
+    }
+    .pagination button {
+      margin: 0 5px;
+      padding: 10px 18px;
+      font-size: 16px;
+      background-color: #FFD700;
+      color: #4B3621;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -39,26 +67,37 @@
     <h1>Blog</h1>
 
     <div class="post">
-      <h2>Night Vibes: The Manhattan Sound</h2>
-      <p>
-        Night is a stylish interpretation of disco house, blending smooth grooves and subtle textures.<br>
-        The music captures a calm yet captivating vibe that resonates with the emotions of the early dawn.<br>
-        A soft, glowing violet mirrorball symbolizes the essence of night — mysterious, calm, and quietly radiant.
-      </p>
+      <div class="post-image">
+        <img src="mirrorball.png" alt="Night Vibes">
+      </div>
+      <div class="post-content">
+        <h2>Night Vibes: The Manhattan Sound</h2>
+        <p>
+          Night is a stylish interpretation of disco house, blending smooth grooves and subtle textures.<br>
+          The music captures a calm yet captivating vibe that resonates with the emotions of the early dawn.<br>
+          A soft, glowing violet mirrorball symbolizes the essence of night — mysterious, calm, and quietly radiant.
+        </p>
+      </div>
     </div>
 
     <div class="post">
-      <h2>Coming Soon...</h2>
-      <p>
-        Stay tuned for more stories from the heart of the city.  
-        Music, people, and inspiration that moves at the rhythm of Manhattan nights.
-      </p>
+      <div class="post-image">
+        <img src="coming_soon.png" alt="Coming Soon">
+      </div>
+      <div class="post-content">
+        <h2>Coming Soon...</h2>
+        <p>
+          Stay tuned for more stories from the heart of the city.<br>
+          Music, people, and inspiration that moves at the rhythm of Manhattan nights.<br>
+          More beats, more reflections, more depth — all in the next release.
+        </p>
+      </div>
     </div>
 
-    <div style="text-align: center; margin: 40px 0;">
-      <button style="margin: 0 5px; padding: 10px 18px; font-size: 16px; background-color: #FFD700; color: #4B3621; border: none; border-radius: 5px; cursor: pointer;">1</button>
-      <button style="margin: 0 5px; padding: 10px 18px; font-size: 16px; background-color: #FFD700; color: #4B3621; border: none; border-radius: 5px; cursor: pointer;">2</button>
-      <button style="margin: 0 5px; padding: 10px 18px; font-size: 16px; background-color: #FFD700; color: #4B3621; border: none; border-radius: 5px; cursor: pointer;">3</button>
+    <div class="pagination">
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
     </div>
 
   </div>
