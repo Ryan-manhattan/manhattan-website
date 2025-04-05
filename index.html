@@ -20,7 +20,7 @@
     .banner {
       position: relative;
       width: 100%;
-      height: 100vh;
+      height: 50vh;
       background: url('banner.png') no-repeat center;
       background-size: cover;
       display: flex;
@@ -37,10 +37,9 @@
       border-bottom: 2px solid black;
     }
 
-    .bottom-area {
-      flex: 1;
-      display: flex;
-    }
+    $1
+  height: 50vh;
+}
 
     .left-area, .right-area {
       flex: 1;
@@ -185,14 +184,24 @@
       Manhattan
     </div>
     <div class="nav-buttons" style="top: 32px;">
-  <a href="join.html" class="nav-link">Join</a>
-</div>
+      <a href="join.html" class="nav-link">Join</a>
+    </div>
     <div class="top-area">
       <div id="clock">--:--:--</div>
     </div>
-    <div class="bottom-area">
-      <div class="left-area"><a href="blog.html" class="link-hover">Music</a></div>
-      <div class="right-area"><a href="#" class="link-hover">Community</a></div>
+  </div>
+
+  <div class="bottom-area" style="display: flex; height: 50vh;">
+  <div class="left-area" style="flex: 1; display: flex; justify-content: center; align-items: center; border-right: 2px solid black; background-color: white;">
+    <a href="blog.html" class="link-hover">Music</a>
+  </div>
+  <div class="right-area" style="flex: 1; display: flex; justify-content: center; align-items: center; background-color: white;">
+    <a href="#" class="link-hover">Community</a>
+  </div>
+</div>
+  <div class="right-area" style="flex: 1; background-color: white;"></div>
+</div>
+      
     </div>
   </div>
 
