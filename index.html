@@ -62,6 +62,7 @@
       color: #FFD700;
       font-weight: bold;
       text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.6);
+      font-variant-numeric: tabular-nums;
     }
 
     .nav-buttons {
@@ -137,11 +138,10 @@
       const hours = String(now.getHours()).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const seconds = String(now.getSeconds()).padStart(2, '0');
-      const milliseconds = String(Math.floor(now.getMilliseconds() / 10)).padStart(2, '0');
-      const timeString = `${hours}:${minutes}:${seconds}.${milliseconds}`;
-      document.getElementById("clock").textContent = timeString;
+      const timeString = `${hours}:${minutes}:${seconds}`;
+      document.getElementById("clock").innerText = timeString;
     }
-    setInterval(updateTime, 50);
+    setInterval(updateTime, 1000);
   </script>
 </head>
 <body>
@@ -156,8 +156,8 @@
       <div id="clock">--:--:--</div>
     </div>
     <div class="bottom-area">
-      <div class="left-area">좌측</div>
-      <div class="right-area">우측</div>
+      <div class="left-area"><a href="blog.html" style="font-size: 36px; font-weight: bold; color: black; text-decoration: none;">Music</a></div>
+      <div class="right-area"><a href="#" style="font-size: 36px; font-weight: bold; color: black; text-decoration: none;">Community</a></div>
     </div>
   </div>
 
