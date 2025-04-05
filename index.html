@@ -160,14 +160,23 @@
       }
     }
   </style>
+<script>
+  function updateTime() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
+    document.getElementById("clock").textContent = timeString;
+  }
+  setInterval(updateTime, 1000);
+</script>
 </head>
 <body>
 
   <div class="banner">
+    <div id="clock" style="position: absolute; top: 20px; left: 40px; font-size: 18px; color: #FFD700; font-weight: bold;"></div>
     <div class="nav-buttons">
       <button onclick="location.href='blog.html'">Music</button>
       <button>Community</button>
-      <button onclick="location.href='join.html'">Join</button>
+      <button>Join</button>
     </div>
     <h1 class="main-title">Manhattan</h1>
   </div>
@@ -188,14 +197,11 @@
         There's a gentle tension between movement and stillness, creating a space that feels both grounded and ethereal.<br>
         Every beat is intentional, every layer a brushstroke on a twilight canvas.<br>
         The sound is intimate but expansive — personal and collective all at once.<br><br>
-
-        At the center of it all glows a violet mirrorball, soft and reflective.<br>
-        It symbolizes the quiet power of night, shimmering with understated elegance.<br>
-        The mirrorball is more than light; it's a feeling — mysterious, nostalgic, and timeless.<br>
-        Like the music itself, it lingers gently in the air long after the last note fades.
       </p>
     </div>
   </div>
+
+  
 
 </body>
 </html>
