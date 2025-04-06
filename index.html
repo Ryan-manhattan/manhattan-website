@@ -52,12 +52,7 @@
       border-right: 2px solid black;
     }
 
-    #clock {
-      font-size: 40px;
-      color: #ffffff;
-      font-weight: bold;
-      font-variant-numeric: tabular-nums;
-    }
+    
 
     .nav-buttons {
       position: absolute;
@@ -154,17 +149,7 @@
       color: white;
     }
   </style>
-  <script>
-    function updateTime() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      const timeString = `${hours}:${minutes}:${seconds}`;
-      document.getElementById("clock").innerText = timeString;
-    }
-    setInterval(updateTime, 1000);
-  </script>
+  
 </head>
 <body>
 
@@ -175,8 +160,7 @@
     <div class="nav-buttons" style="top: 32px;">
       <a href="join.html" class="nav-link">Join</a>
     </div>
-    <div class="top-area">
-      <div id="clock" style="margin-left: auto; margin-right: 150px;">--:--:--</div>
+    
     </div>
   </div>
 
