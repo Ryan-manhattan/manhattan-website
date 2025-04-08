@@ -71,11 +71,12 @@
     
 
     .blog-container {
-      max-width: 1000px;
-      margin: 80px auto;
-      padding: 0 20px;
-      background-color: #1a1a1a;
-    }
+  max-width: 1000px;
+  margin: 120px auto;
+  padding: 60px 40px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+}
     .blog-container h1 {
       font-size: 36px;
       margin-bottom: 40px;
@@ -101,9 +102,16 @@
       flex: 2;
     }
     .post-content h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
+  font-size: 28px;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.post-content h2 a:hover {
+  color: #FFD700;
+  text-decoration: underline;
+  animation: glow 1s ease-in-out infinite alternate;
+}
     .post-content p {
       font-size: 15px;
       line-height: 1.7;
@@ -122,7 +130,15 @@
       border-radius: 5px;
       cursor: pointer;
     }
-  </style>
+    @keyframes glow {
+    0% {
+      text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700;
+    }
+    100% {
+      text-shadow: 0 0 15px #FFD700, 0 0 20px #FFD700;
+    }
+  }
+</style>
   
 </head>
 <body>
@@ -135,25 +151,29 @@
     
 
     <div class="post">
-      <div class="post-image">
-        <img src="/images/Cover_fortnight.png" alt="fortnight">
-      </div>
-      <div class="post-content">
-        <h2>fortnight</h2>
+  <div class="post-image">
+    <a href="https://soundcloud.com/moodo-78144395/fortnight?si=f0707fe2b3d14f08b78506637e4571b8&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank">
+      <img src="/images/Cover_fortnight.png" alt="fortnight">
+    </a>
+  </div>
+  <div class="post-content">
+    <h2><a href="https://soundcloud.com/moodo-78144395/fortnight?si=f0707fe2b3d14f08b78506637e4571b8&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" style="color: inherit; text-decoration: none;">fortnight</a></h2>
         <p>
-          Stay tuned for more stories from the heart of the city.<br>
-          Music, people, and inspiration that moves at the rhythm of Manhattan nights.<br>
-          More beats, more reflections, more depth — all in the next release.
+          Fortnight delivers a refreshing disco rhythm with uplifting melodies.<br>
+          Its bright textures and punchy beats evoke an energizing summer night.<br>
+          A breezy, feel-good sound that brings dance and clarity together.
         </p>
       </div>
     </div>
 
     <div class="post">
-      <div class="post-image">
-        <img src="/images/Cover_nights.png" alt="Nights">
-      </div>
-      <div class="post-content">
-        <h2>Nights</h2>
+  <div class="post-image">
+    <a href="https://soundcloud.com/moodo-78144395/night?si=23d6d181933c45bdb9ed5d6a1f5939db&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank">
+      <img src="/images/Cover_nights.png" alt="Nights">
+    </a>
+  </div>
+  <div class="post-content">
+    <h2><a href="https://soundcloud.com/moodo-78144395/night?si=23d6d181933c45bdb9ed5d6a1f5939db&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" style="color: inherit; text-decoration: none;">Nights</a></h2>
         <p>
           Nights is a stylish interpretation of disco house, blending smooth grooves and subtle textures.<br>
           The music captures a calm yet captivating vibe that resonates with the emotions of the early dawn.<br>
