@@ -6,7 +6,7 @@
   <title>Moodo Chart</title>
   <style>
     body {
-      font-family: 'DM Serif Display', serif;
+      font-family: 'DM Serif Display', sans-serif;
       background-color: #000;
       color: #fff;
       margin: 0;
@@ -18,7 +18,9 @@
 
     h1 {
       margin-top: 60px;
-      font-size: 2rem;
+      font-size: 2.8rem;
+      font-family: 'Segoe UI', sans-serif;
+      font-weight: bold;
       color: #fff;
     }
 
@@ -31,11 +33,19 @@
     }
 
     li {
-      margin: 10px 0;
-      padding: 10px;
+      margin: 12px 0;
+      padding: 24px 28px;
       background-color: #111;
-      border-radius: 8px;
-      width: 300px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 800px;
+      font-size: 1.2rem;
+      text-align: left;
+      border: 1px solid #333;
+      box-shadow: 0 0 10px rgba(255,255,255,0.08);
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.6s ease;
     }
 
     a.back {
@@ -51,14 +61,35 @@
   </style>
 </head>
 <body>
-  <h1>🎵 Moodo Chart Top 5</h1>
-  <ol>
-    <li>1. Fortnight - Moodo</li>
-    <li>2. Nights - Moodo</li>
-    <li>3. Echo Lights - Revo</li>
-    <li>4. Afterhours - Lucent</li>
-    <li>5. Skyline Jam - Neonvibe</li>
+  <h1>Moodo Chart Top 50</h1>
+  <ol id="chart-list">
+    <li>Loading chart...</li>
   </ol>
   <a href="../index.html" class="back">&#8592; Back to Home</a>
+<script>
+  let currentIndex = 0;
+  let chartItems = [];
+
+  function showNextItem() {
+    const list = document.getElementById("chart-list");
+    const track = chartItems[currentIndex];
+    list.innerHTML = `<li>${currentIndex + 1}. ${track.name} - ${track.artist.name}</li>`;
+    currentIndex = (currentIndex + 1) % chartItems.length;
+  }
+
+  setInterval(() => {
+    if (chartItems.length > 0) showNextItem();
+  }, 2000);
+
+  fetch("https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=a8c28adb3e8eed2a1078db8b1ba699cf&format=json")
+    .then(response => response.json())
+    .then(data => {
+      chartItems = data.tracks.track.slice(0, 50);
+      showNextItem();
+    })
+    .catch(() => {
+      document.getElementById("chart-list").innerHTML = "<li>Failed to load chart.</li>";
+    });
+</script>
 </body>
 </html>
