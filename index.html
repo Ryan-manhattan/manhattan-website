@@ -13,3 +13,15 @@
 
   loadChart();
 </script>
+
+<button onclick="saveChart()">차트 저장하기</button>
+
+<script>
+  async function saveChart() {
+    const res = await fetch('/api/saveChartToSupabase', {
+      method: 'POST',
+    });
+    const data = await res.json();
+    alert(data.message);
+  }
+</script>
