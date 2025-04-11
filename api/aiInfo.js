@@ -7,8 +7,8 @@ export default async function handler(req, res) {
   console.log("✅ API 키 확인:", !!process.env.OPENAI_API_KEY);
 
   const prompt = track
-    ? `아티스트 ${artist}의 곡 '${track}'에 담긴 감정, 주제, 정치·철학적 메시지를 간략히 분석해줘. 가사: \${song_lyrics.slice(0, 400)} / 배경: \${background.slice(0, 400)}`
-    : `아티스트 ${artist}의 정치적, 철학적 성향을 가사와 배경 기반으로 간단히 분석해줘. 주요 가사: \${song_lyrics.slice(0, 400)} / 배경: \${background.slice(0, 400)}`;
+    ? `${artist}의 곡 '${track}'에 대해 간단히 설명해줘.`
+    : `${artist}는 어떤 스타일의 아티스트인지 짧게 알려줘.`;
 
   try {
     const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
