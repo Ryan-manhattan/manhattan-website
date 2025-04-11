@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moodo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Serif Display', serif;
+      background-color: #000;
+      color: #fff;
+    }
+
+    .nav-buttons {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 2px solid white;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      font-family: 'DM Serif Display', serif;
+    }
+
+    .nav-link:hover {
+      background-color: #222;
+      color: #fff;
+    }
+
+    .hero {
+      height: 87.5vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px 40px 20px;
+    }
+
+    .logo {
+      width: 160px;
+      margin: 0px 0 10px 0;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
+    .soundcloud-link {
+      font-size: 1rem;
+      color: #fff;
+      background: linear-gradient(to right, #ffffff1a, #ffffff05);
+      padding: 8px 20px;
+      border: 1px solid #666;
+      border-radius: 12px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-family: 'DM Serif Display', serif;
+      backdrop-filter: blur(4px);
+    }
+
+    .soundcloud-link:hover {
+      background-color: #fff;
+      color: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    }
+
+    .bottom-area {
+      display: flex;
+      width: 100%;
+      height: 12.5vh;
+    }
+
+    .left-area, .right-area {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #111;
+    }
+
+    .left-area {
+      border-right: 2px solid black;
+    }
+
+    .link-hover {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      transition: all 0.3s ease;
+      font-family: 'DM Serif Display', serif;
+    }
+
+    .link-hover:hover {
+      background-color: black;
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #eee;
+      background-color: #2c2c2c;
+      width: 100%;
+      font-family: 'DM Serif Display', serif;
+    }
+
+    @media (max-width: 768px) {
+      .nav-buttons {
+        top: 20px;
+        right: 20px;
+      }
+
+      .link-hover {
+        font-size: 18px;
+      }
+
+      .left-area, .right-area {
+        font-size: 18px;
+        padding: 10px;
+      }
+
+      .bottom-area {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .left-area {
+        border-right: none;
+        border-bottom: 2px solid black;
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0.6;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-buttons">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeaWJWJYencuB9kj8sWNleIKQzO2QcoIai31nmKKOjNdNCytg/viewform?pli=1" target="_blank" class="nav-link">Sign Up</a>
+  </div>
+
+  <section class="hero">
+    <img src="images/logo.png" alt="Moodo Logo" class="logo" />
+    <div class="tagline">Mood your music on</div>
+    <a href="pages/chart.html" class="soundcloud-link">Enter</a>
+  </section>
+
+  <div class="bottom-area">
+    <div class="left-area">
+      <a href="pages/chart.html" class="link-hover">Chart</a>
+    </div>
+    <div class="right-area">
+      <a href="https://soundcloud.com/moodo-78144395/tracks" class="link-hover" target="_blank">Music</a>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Moodo Sound. All rights reserved.
+  </footer></body>
+</html>
