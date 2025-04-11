@@ -166,7 +166,7 @@
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ artist, track })
+        body: JSON.stringify({ artist, track, song_lyrics: '', background: '' })
       });
 
       const data = await res.json();
