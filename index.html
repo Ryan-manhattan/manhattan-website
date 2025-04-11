@@ -95,7 +95,7 @@
   fetch("/api/chartData")
     .then(response => response.json())
     .then(data => {
-      const fullChart = data.tracks.track.slice(0, 50);
+      const fullChart = data.tracks.slice(0, 50);
       const fullList = document.getElementById("full-chart");
       fullList.innerHTML = fullChart.map((track, index) => `
         <li>${index + 1}. ${track.artist.name} - ${track.name}</li>
