@@ -1,30 +1,30 @@
-import { createClient } from '@supabase/supabase-js'
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-)
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'POST only allowed' })
+    return res.status(405).json({ message: 'POST only allowed' });
   }
 
   try {
-    const dummy = [
-      { title: 'Just Testing', artist: 'Supabase Bot', rank: 99 }
-    ]
+    const dummy = {
+      title: 'From Firebase',
+      artist: 'Fire Bot',
+      rank: 1
+    };
 
-    const { error } = await supabase.from('chart_data').insert(dummy)
-
-    if (error) {
-      console.error('Supabase Insert Error:', error)
-      return res.status(500).json({ message: 'Insert 실패', error })
-    }
-
-    return res.status(200).json({ message: '✅ 테스트 데이터 저장 완료!' })
+    await addDoc(collection(db, 'chart_data'), dummy);
+    res.status(200).json({ message: '🔥 Firebase에 저장 완료!' });
   } catch (err) {
-    console.error('서버 오류:', err)
-    return res.status(500).json({ message: '서버 오류', error: err.message })
+    res.status(500).json({ message: 'Firebase 오류', error: err.message });
   }
 }
