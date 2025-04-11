@@ -46,7 +46,7 @@
     }
 
     .hero {
-      height: 100vh;
+      height: 87.5vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -57,7 +57,7 @@
 
     .logo {
       width: 160px;
-      margin: 0px 0 0px 0;
+      margin: 0px 0 10px 0;
     }
 
     .tagline {
@@ -90,7 +90,7 @@
     .bottom-area {
       display: flex;
       width: 100%;
-      height: 50vh;
+      height: 12.5vh;
     }
 
     .left-area, .right-area {
@@ -155,7 +155,17 @@
         border-bottom: 2px solid black;
       }
     }
-  </style>
+      @keyframes fadeIn {
+      0% {
+        opacity: 0.6;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+    }
+</style>
 </head>
 <body>
   <div class="nav-buttons">
@@ -163,6 +173,7 @@
   </div>
 
   <section class="hero">
+    <div id="clock" style="font-size: 1.2rem; color: #ccc; margin-bottom: 20px; animation: fadeIn 2s ease-in-out infinite alternate;"></div>
     <img src="images/logo.png" alt="Moodo Logo" class="logo" />
     <div class="tagline">Mood your music on</div>
     <a href="https://soundcloud.com/moodo-78144395/tracks" target="_blank" class="soundcloud-link">Listen on SoundCloud</a>
@@ -180,5 +191,16 @@
   <footer>
     © 2025 Moodo Sound. All rights reserved.
   </footer>
+<script>
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById("clock").textContent = `${hours}:${minutes}:${seconds}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
 </body>
 </html>
