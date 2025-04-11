@@ -1,195 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-<meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Moodo Chart</title>
-  <style>
-    body {
-      font-family: 'DM Serif Display', sans-serif;
-      background-color: #000;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    h1 {
-      margin-top: 60px;
-      font-size: 2.8rem;
-      font-family: 'DM Serif Display', serif;
-      font-weight: bold;
-      color: #fff;
-    }
-
-    ol {
-      margin-top: 30px;
-      padding: 0;
-      list-style: none;
-      text-align: center;
-      font-size: 1.2rem;
-    }
-
-    li {
-      margin: 0;
-      padding: 16px 28px;
-      background-color: #111;
-      border-radius: 0;
-      width: 100vw;
-      font-size: 1.2rem;
-      text-align: left;
-      border-bottom: 1px solid #333;
-      box-shadow: none;
-      opacity: 1;
-      transform: translateY(0);
-      transition: all 0.6s ease;
-    }
-
-    a.back {
-      margin-top: 40px;
-      color: #ccc;
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
-
-    a.back:hover {
-      text-decoration: underline;
-    }
-  .loading {
-      font-style: italic;
-      color: #888;
-    }
-    .dots::after {
-      content: '';
-      display: inline-block;
-      animation: dots 1s steps(3, end) infinite;
-    }
-    @keyframes dots {
-      0% { content: ''; }
-      33% { content: '.'; }
-      66% { content: '..'; }
-      100% { content: '...'; }
-    }
-  [data-hover="info"]::after {
-      content: ' info';
-      font-size: 0.7rem;
-      color: #888;
-      margin-left: 6px;
-    }
-  </style>
-</head>
-<body>
-  <div style="background-color: #f4f4f4; border-bottom: 1px solid #ccc; width: 100%; height: 270px; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px rgba(255,255,255,0.1);">
-  <h1 style="margin: 0; font-size: 4.4rem; font-family: 'Bebas Neue', cursive; font-weight: 700; color: #111; text-align: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">Moodo Chart Top 50</h1>
-</div>
-  <div id="animated-chart" style="display: flex; align-items: center; justify-content: center; margin-top: 20px; width: 90%; max-width: 800px; min-height: 120px; background-color: #111; border-radius: 6px; padding: 24px; font-size: 2.2rem; font-family: 'Bebas Neue', cursive; font-weight: 700; color: #fff; text-align: center; border: 2px solid #444; box-shadow: 0 0 12px rgba(255,255,255,0.15); transition: opacity 0.6s ease, transform 0.6s ease;"></div>
-  <ol id="full-chart" style="align-self: flex-start; width: 100vw; overflow-x: hidden;">
-    <li>Loading full chart...</li>
-  </ol>
-
-<a href="../index.html" class="back">&#8592; Back to Home</a>
-
-<script>
-  fetch("https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=a8c28adb3e8eed2a1078db8b1ba699cf&format=json")
-    .then(response => response.json())
-    .then(data => {
-      const fullChart = data.tracks.track.slice(0, 50);
-      const fullList = document.getElementById("full-chart");
-      fullList.innerHTML = fullChart.map((track, index) => `
-        <li>${index + 1}. ${track.artist.name} - ${track.name}</li>
-      `).join('');
-    })
-    .catch(() => {
-      document.getElementById("full-chart").innerHTML = "<li>Failed to load full chart.</li>";
-    });
-  let currentIndex = 0;
-  let chartItems = [];
-
-  function showAnimatedTrack() {
-    const box = document.getElementById("animated-chart");
-    const track = chartItems[currentIndex];
-    box.style.opacity = 0;
-    box.style.transform = "translateY(20px)";
-    setTimeout(() => {
-      box.innerHTML = `<a href="https://www.youtube.com/results?search_query=${encodeURIComponent(track.artist.name + ' ' + track.name)}" target="_blank" style="color: #fff; text-decoration: none;">${currentIndex + 1}. ${track.artist.name} - ${track.name}</a>`;
-      box.style.opacity = 1;
-      box.style.transform = "translateY(0)";
-    }, 200);
-    currentIndex = (currentIndex + 1) % chartItems.length;
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
   }
 
-  fetch("https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=a8c28adb3e8eed2a1078db8b1ba699cf&format=json")
-    .then(response => response.json())
-    .then(data => {
-      chartItems = data.tracks.track.slice(0, 50);
-      showAnimatedTrack();
-      setInterval(showAnimatedTrack, 3000);
+  const { artist, track } = req.body;
+  console.log("✅ API 키 확인:", !!process.env.OPENAI_API_KEY);
 
-      const fullList = document.getElementById("full-chart");
-      fullList.innerHTML = chartItems.map((track, index) => `
-        <li style="height: ${index < 3 ? '160px' : '80px'}; display: flex; align-items: center;">
-  <div style="display: flex; align-items: center; gap: 16px; justify-content: space-between; width: 100%;">
-    <div style="display: flex; align-items: center; gap: 16px;">
-      <div style="width: 48px; height: 48px; display: flex; justify-content: center; align-items: center; border-radius: 6px; font-weight: bold; font-size: 1rem; background-color: ${index === 0 ? '#FFD700' : index === 1 ? '#C0C0C0' : index === 2 ? '#CD7F32' : '#fff'}; color: ${index < 3 ? '#000' : '#000'};">
-        ${index + 1}
-      </div>
-      <div>
-        <div style="font-size: 1rem; color: #aaa; margin-bottom: 4px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.color='#e0b0ff'; this.style.transform='scale(1.03)'; this.setAttribute('data-hover','info')" onmouseout="this.style.color='#aaa'; this.style.transform='scale(1)'; this.removeAttribute('data-hover')" onclick="showInfo('${track.artist.name}', '')">${track.artist.name}</div>
-        <div style="font-size: 1.4rem; font-weight: bold; color: #fff; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.color='#e0b0ff'; this.style.transform='scale(1.05)'; this.setAttribute('data-hover','info')" onmouseout="this.style.color='#fff'; this.style.transform='scale(1)'; this.removeAttribute('data-hover')"><a href="#" onclick="showInfo('${track.artist.name}', '${track.name}'); return false;" style="color: inherit; text-decoration: none;">${track.name}</a></div>
-<div><a href="https://www.youtube.com/results?search_query=${encodeURIComponent(track.artist.name + ' ' + track.name)}" target="_blank" style="display: inline-block; margin-top: 6px; padding: 4px 10px; font-size: 0.7rem; font-weight: normal; color: #fff; background-color: #000; border: 1px solid #444; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease, transform 0.3s ease;" onmouseover="this.style.backgroundColor='#ff0000'; this.style.transform='scale(1.05)'" onmouseout="this.style.backgroundColor='#000'; this.style.transform='scale(1)'">Play in YouTube</a></div>
-      </div>
-    </div>
-  </div>
-</li>
-      `).join('');
-    })
-    .catch(() => {
-      document.getElementById("full-chart").innerHTML = "<li>Failed to load full chart.</li>";
+  const prompt = track
+    ? `${artist}의 곡 '${track}'에 대해 간단히 설명해줘.`
+    : `${artist}는 어떤 스타일의 아티스트인지 짧게 알려줘.`;
+
+  try {
+    const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: prompt }]
+      })
     });
 
-  async function showInfo(artist, track) {
-    const content = document.getElementById("info-content");
-    content.innerHTML = '<span class="loading">정보를 받아오는 중<span class="dots"></span></span>';
-    const link = document.getElementById("info-link");
-    const box = document.getElementById("info-box");
+    const data = await openaiRes.json();
+    const message = data.choices?.[0]?.message?.content;
 
-    // 먼저 팝업을 표시
-    box.style.right = "0";
-    box.style.visibility = "visible";
-    box.style.opacity = "1";
-
-    try {
-      const res = await fetch("/api/aiInfo", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ artist, track, song_lyrics: '', background: '' })
-      });
-
-      const data = await res.json();
-      console.log("📦 OpenAI 응답:", data);
-      if (!data || !data.message) {
-        throw new Error("응답에 message가 없습니다");
-      }
-      content.innerHTML = data.message.split(',').join('<br>');
-      link.href = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
-      box.style.right = "0";
-      box.style.visibility = "visible";
-      box.style.opacity = "1";
-    } catch (err) {
-      content.textContent = "정보 요청 중 오류가 발생했습니다.";
-      box.style.display = "block";
-    }
+    res.status(200).json({ message: message || "정보 없음" });
+  } catch (error) {
+    console.error("OpenAI API 호출 오류:", error);
+    res.status(500).json({ message: "정보 요청 중 오류가 발생했습니다." });
   }
-</script>
-
-<div id="info-box" style="visibility: hidden; opacity: 0;position: fixed; top: 0; right: -50vw; transition: right 0.5s ease-in-out; background-color: #111; color: #fff; padding: 60px 40px; border-left: 2px solid #444; border-top: none; border-radius: 0; box-shadow: -4px 0 30px rgba(255,255,255,0.2); z-index: 1000; width: 50vw; height: 80vh; font-size: 1.2rem; text-align: center; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; justify-content: space-between;">
-  <button onclick="const box = document.getElementById('info-box'); box.style.right='-50vw'; box.style.visibility='hidden'; box.style.opacity='0';" style="position: absolute; top: 12px; right: 12px; background: transparent; color: #fff; border: none; font-size: 1.2rem; cursor: pointer;">✕</button>
-  <div id="info-content"></div>
-  <a id="info-link" href="#" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 10px; color: #e0b0ff; text-decoration: underline; font-size: 0.95rem;">Perplexity에서 검색하기</a>
-</div>
-</body>
-</html>
+}
