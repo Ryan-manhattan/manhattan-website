@@ -1,0 +1,15 @@
+<ul id="chart"></ul>
+
+<script>
+  async function loadChart() {
+    const res = await fetch('/api/getChartFromSupabase');
+    const chart = await res.json();
+
+    const container = document.getElementById('chart');
+    container.innerHTML = chart.map(item =>
+      `<li><strong>${item.rank}. ${item.title}</strong> - ${item.artist}</li>`
+    ).join('');
+  }
+
+  loadChart();
+</script>
