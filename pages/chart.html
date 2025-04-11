@@ -99,7 +99,7 @@
     box.style.opacity = 0;
     box.style.transform = "translateY(20px)";
     setTimeout(() => {
-      box.textContent = `${currentIndex + 1}. ${track.artist.name} - ${track.name}`;
+      box.innerHTML = `<a href="https://www.youtube.com/results?search_query=${encodeURIComponent(track.artist.name + ' ' + track.name)}" target="_blank" style="color: #fff; text-decoration: none;">${currentIndex + 1}. ${track.artist.name} - ${track.name}</a>`;
       box.style.opacity = 1;
       box.style.transform = "translateY(0)";
     }, 200);
@@ -111,7 +111,7 @@
     .then(data => {
       chartItems = data.tracks.track.slice(0, 50);
       showAnimatedTrack();
-      setInterval(showAnimatedTrack, 4000);
+      setInterval(showAnimatedTrack, 3000);
 
       const fullList = document.getElementById("full-chart");
       fullList.innerHTML = chartItems.map((track, index) => `
