@@ -19,7 +19,7 @@
     h1 {
       margin-top: 60px;
       font-size: 2.8rem;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'DM Serif Display', serif;
       font-weight: bold;
       color: #fff;
     }
@@ -61,35 +61,61 @@
   </style>
 </head>
 <body>
-  <h1>Moodo Chart Top 50</h1>
-  <ol id="chart-list">
-    <li>Loading chart...</li>
+  <div style="background-color: #111; border-bottom: 1px solid #333; width: 100%; height: 135px; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px rgba(255,255,255,0.1);">
+  <h1 style="margin: 0; font-size: 2.2rem; font-family: 'Segoe UI', sans-serif; font-weight: 500; color: #fff; text-align: center;">Moodo Chart Top 50</h1>
+</div>
+  <div id="animated-chart" style="display: flex; align-items: center; justify-content: center; margin-top: 20px; width: 90%; max-width: 800px; min-height: 120px; background-color: #111; border-radius: 12px; padding: 24px; font-size: 2rem; font-family: 'DM Serif Display', serif; font-weight: bold; color: #fff; text-align: center; border: 1px solid #333; box-shadow: 0 0 10px rgba(255,255,255,0.1); transition: opacity 0.6s ease, transform 0.6s ease;"></div>
+  <ol id="full-chart">
+    <li>Loading full chart...</li>
   </ol>
-  <a href="../index.html" class="back">&#8592; Back to Home</a>
+<a href="../index.html" class="back">&#8592; Back to Home</a>
+
 <script>
+  fetch("https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=a8c28adb3e8eed2a1078db8b1ba699cf&format=json")
+    .then(response => response.json())
+    .then(data => {
+      const fullChart = data.tracks.track.slice(0, 50);
+      const fullList = document.getElementById("full-chart");
+      fullList.innerHTML = fullChart.map((track, index) => `
+        <li>${index + 1}. ${track.artist.name} - ${track.name}</li>
+      `).join('');
+    })
+    .catch(() => {
+      document.getElementById("full-chart").innerHTML = "<li>Failed to load full chart.</li>";
+    });
   let currentIndex = 0;
   let chartItems = [];
 
-  function showNextItem() {
-    const list = document.getElementById("chart-list");
+  function showAnimatedTrack() {
+    const box = document.getElementById("animated-chart");
     const track = chartItems[currentIndex];
-    list.innerHTML = `<li>${currentIndex + 1}. ${track.name} - ${track.artist.name}</li>`;
+    box.style.opacity = 0;
+    box.style.transform = "translateY(20px)";
+    setTimeout(() => {
+      box.textContent = `${currentIndex + 1}. ${track.artist.name} - ${track.name}`;
+      box.style.opacity = 1;
+      box.style.transform = "translateY(0)";
+    }, 200);
     currentIndex = (currentIndex + 1) % chartItems.length;
   }
-
-  setInterval(() => {
-    if (chartItems.length > 0) showNextItem();
-  }, 2000);
 
   fetch("https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=a8c28adb3e8eed2a1078db8b1ba699cf&format=json")
     .then(response => response.json())
     .then(data => {
       chartItems = data.tracks.track.slice(0, 50);
-      showNextItem();
+      showAnimatedTrack();
+      setInterval(showAnimatedTrack, 4000);
+
+      const fullList = document.getElementById("full-chart");
+      fullList.innerHTML = chartItems.map((track, index) => `
+        <li>${index + 1}. ${track.artist.name} - ${track.name}</li>
+      `).join('');
     })
     .catch(() => {
-      document.getElementById("chart-list").innerHTML = "<li>Failed to load chart.</li>";
+      document.getElementById("full-chart").innerHTML = "<li>Failed to load full chart.</li>";
     });
 </script>
+
+
 </body>
 </html>
