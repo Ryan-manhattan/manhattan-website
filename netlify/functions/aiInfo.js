@@ -10,7 +10,7 @@ export async function handler(event) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer YOUR_OPENAI_API_KEY' // 보안 관리 필수
+      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
     },
     body: JSON.stringify({
       model: 'gpt-3.5-turbo',
