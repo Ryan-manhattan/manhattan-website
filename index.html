@@ -155,6 +155,7 @@
     const link = document.getElementById("info-link");
     const box = document.getElementById("info-box");
 
+    // 먼저 팝업을 표시
     box.style.right = "0";
     box.style.visibility = "visible";
     box.style.opacity = "1";
@@ -170,20 +171,11 @@
 
       const data = await res.json();
       console.log("📦 OpenAI 응답:", data);
-      console.log("📦 OpenAI 응답:", data);
       if (!data || !data.message) {
         throw new Error("응답에 message가 없습니다");
       }
-      if (!data || !data.message) {
-        throw new Error("응답에 message가 없습니다");
-      }
-      content.innerHTML = `<div style="text-align: left; line-height: 1.6; font-size: 1rem; padding: 10px;">
-  <h2 style="font-size: 1.4rem; color: #e0b0ff; margin-bottom: 16px;">AI 분석 결과</h2>
-  ${data.message.replace(/# (.*?)
-/g, '<h3 style=\"margin-top: 18px; color: #e0e0e0; font-size: 1.2rem;\">$1</h3>').replaceAll('
-', '<br>')}
-</div>`;
-      link.href = `https://www.perplexity.ai/search?q=${encodeURIComponent(track ? artist + ' ' + track : artist)}`;
+      content.innerHTML = data.message.split(',').join('<br>');
+      link.href = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
       box.style.right = "0";
       box.style.visibility = "visible";
       box.style.opacity = "1";
