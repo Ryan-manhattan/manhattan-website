@@ -174,7 +174,6 @@
   </div>
 
   <section class="hero">
-    <div id="clock" style="font-size: 1.4rem; color: #ccc; margin-bottom: 20px;"></div>
     <img src="images/logo.png" alt="Moodo Logo" class="logo" />
     <div class="tagline">Mood your music on</div>
     <a href="https://soundcloud.com/moodo-78144395/tracks" target="_blank" class="soundcloud-link">Listen on SoundCloud</a>
@@ -191,23 +190,5 @@
 
   <footer>
     © 2025 Moodo Sound. All rights reserved.
-  </footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      function updateClock() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        const clock = document.getElementById("clock");
-        if (clock) {
-          clock.textContent = `${hours}:${minutes}:${seconds}`;
-        }
-      }
-      setInterval(updateClock, 1000);
-      updateClock();
-    });
-  </script>
-</body>
+  </footer></body>
 </html>
