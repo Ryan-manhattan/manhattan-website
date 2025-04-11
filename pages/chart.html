@@ -57,6 +57,27 @@
     a.back:hover {
       text-decoration: underline;
     }
+  .loading {
+      font-style: italic;
+      color: #888;
+    }
+    .dots::after {
+      content: '';
+      display: inline-block;
+      animation: dots 1s steps(3, end) infinite;
+    }
+    @keyframes dots {
+      0% { content: ''; }
+      33% { content: '.'; }
+      66% { content: '..'; }
+      100% { content: '...'; }
+    }
+  [data-hover="info"]::after {
+      content: ' info';
+      font-size: 0.7rem;
+      color: #888;
+      margin-left: 6px;
+    }
   </style>
 </head>
 <body>
@@ -115,10 +136,9 @@
         ${index + 1}
       </div>
       <div>
-        <div style="font-size: 1rem; color: #aaa; margin-bottom: 4px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.color='#e0b0ff'; this.style.transform='scale(1.03)'" onmouseout="this.style.color='#aaa'; this.style.transform='scale(1)'" onclick="showInfo('${track.artist.name}', '')">${track.artist.name}</div>
-        <div style="font-size: 1.4rem; font-weight: bold; color: #fff; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.color='#e0b0ff'; this.style.transform='scale(1.05)'" onmouseout="this.style.color='#fff'; this.style.transform='scale(1)'">
-  <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(track.artist.name + ' ' + track.name)}" target="_blank" style="color: inherit; text-decoration: none;">${track.name}</a>
-</div>
+        <div style="font-size: 1rem; color: #aaa; margin-bottom: 4px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.color='#e0b0ff'; this.style.transform='scale(1.03)'; this.setAttribute('data-hover','info')" onmouseout="this.style.color='#aaa'; this.style.transform='scale(1)'; this.removeAttribute('data-hover')" onclick="showInfo('${track.artist.name}', '')">${track.artist.name}</div>
+        <div style="font-size: 1.4rem; font-weight: bold; color: #fff; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.color='#e0b0ff'; this.style.transform='scale(1.05)'; this.setAttribute('data-hover','info')" onmouseout="this.style.color='#fff'; this.style.transform='scale(1)'; this.removeAttribute('data-hover')"><a href="#" onclick="showInfo('${track.artist.name}', '${track.name}'); return false;" style="color: inherit; text-decoration: none;">${track.name}</a></div>
+<div><a href="https://www.youtube.com/results?search_query=${encodeURIComponent(track.artist.name + ' ' + track.name)}" target="_blank" style="display: inline-block; margin-top: 6px; padding: 4px 10px; font-size: 0.7rem; font-weight: normal; color: #fff; background-color: #000; border: 1px solid #444; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease, transform 0.3s ease;" onmouseover="this.style.backgroundColor='#ff0000'; this.style.transform='scale(1.05)'" onmouseout="this.style.backgroundColor='#000'; this.style.transform='scale(1)'">Play in YouTube</a></div>
       </div>
     </div>
   </div>
@@ -131,9 +151,14 @@
 
   async function showInfo(artist, track) {
     const content = document.getElementById("info-content");
+    content.innerHTML = '<span class="loading">정보를 받아오는 중<span class="dots"></span></span>';
     const link = document.getElementById("info-link");
     const box = document.getElementById("info-box");
-    const query = track ? `${artist} ${track} 음악 정보를 알려줘` : `${artist} 아티스트에 대해 알려줘`;
+
+    // 먼저 팝업을 표시
+    box.style.right = "0";
+    box.style.visibility = "visible";
+    box.style.opacity = "1";
 
     try {
       const res = await fetch("/api/aiInfo", {
@@ -147,7 +172,9 @@
       const data = await res.json();
       content.innerHTML = (data.message || "정보를 가져오지 못했습니다.").split(',').join('<br>');
       link.href = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
-      box.style.display = "block";
+      box.style.right = "0";
+      box.style.visibility = "visible";
+      box.style.opacity = "1";
     } catch (err) {
       content.textContent = "정보 요청 중 오류가 발생했습니다.";
       box.style.display = "block";
@@ -155,8 +182,8 @@
   }
 </script>
 
-<div id="info-box" style="display: none; position: fixed; top: 0; right: 0; background-color: #111; color: #fff; padding: 60px 40px; border-left: 2px solid #444; border-top: none; border-radius: 0; box-shadow: -4px 0 30px rgba(255,255,255,0.2); z-index: 1000; width: 50vw; height: 80vh; font-size: 1.2rem; text-align: center; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; justify-content: space-between;">
-  <button onclick="document.getElementById('info-box').style.display='none'" style="position: absolute; top: 12px; right: 12px; background: transparent; color: #fff; border: none; font-size: 1.2rem; cursor: pointer;">✕</button>
+<div id="info-box" style="visibility: hidden; opacity: 0;position: fixed; top: 0; right: -50vw; transition: right 0.5s ease-in-out; background-color: #111; color: #fff; padding: 60px 40px; border-left: 2px solid #444; border-top: none; border-radius: 0; box-shadow: -4px 0 30px rgba(255,255,255,0.2); z-index: 1000; width: 50vw; height: 80vh; font-size: 1.2rem; text-align: center; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; justify-content: space-between;">
+  <button onclick="const box = document.getElementById('info-box'); box.style.right='-50vw'; box.style.visibility='hidden'; box.style.opacity='0';" style="position: absolute; top: 12px; right: 12px; background: transparent; color: #fff; border: none; font-size: 1.2rem; cursor: pointer;">✕</button>
   <div id="info-content"></div>
   <a id="info-link" href="#" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 10px; color: #e0b0ff; text-decoration: underline; font-size: 0.95rem;">Perplexity에서 검색하기</a>
 </div>
