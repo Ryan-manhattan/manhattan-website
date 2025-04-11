@@ -42,18 +42,12 @@
       padding: 16px 20px;
       border-bottom: 1px solid #333;
     }
-    .ai-info {
-      margin-top: 10px;
-      font-size: 0.95rem;
-      color: #aaa;
-    }
   </style>
 </head>
 <body>
   <h1>Moodo Chart Top 50</h1>
   <div class="controls">
     <button onclick="triggerSaveChartData()">차트 저장</button>
-    <button onclick="triggerGenerateAIInfo()">AI 분석 저장</button>
   </div>
   <ol id="chart-list">
     <li>Loading chart...</li>
@@ -63,24 +57,20 @@
     async function loadChart() {
       try {
         const chartRes = await fetch('/data/chartData.json');
-        const aiRes = await fetch('/data/aiInfo.json');
         const chartData = await chartRes.json();
-        const aiInfo = await aiRes.json();
 
         const chartList = document.getElementById('chart-list');
         chartList.innerHTML = '';
 
         chartData.tracks.forEach((track, i) => {
-          const match = aiInfo.results.find(r => r.artist === track.artist.name && r.title === track.name);
           chartList.innerHTML += `
             <li>
               <strong>${i + 1}. ${track.artist.name} - ${track.name}</strong>
-              <div class="ai-info">${match ? match.message : '(분석 없음)'}</div>
             </li>
           `;
         });
       } catch (err) {
-        document.getElementById('chart-list').innerHTML = '<li>차트 또는 AI 정보 로딩 실패</li>';
+        document.getElementById('chart-list').innerHTML = '<li>차트 로딩 실패</li>';
         console.error(err);
       }
     }
@@ -89,13 +79,6 @@
       const res = await fetch('/api/saveChartData', { method: 'POST' });
       const data = await res.json();
       alert('✅ 차트 저장 완료: ' + (data.count || '?') + '곡');
-      loadChart();
-    }
-
-    async function triggerGenerateAIInfo() {
-      const res = await fetch('/api/generateAIInfo', { method: 'POST' });
-      const data = await res.json();
-      alert('🧠 AI 분석 저장 완료: ' + (data.count || '?') + '곡');
       loadChart();
     }
 
