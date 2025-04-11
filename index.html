@@ -56,7 +56,7 @@
   <script>
     async function loadChart() {
       try {
-        const chartRes = await fetch('/data/chartData.json');
+        const chartRes = await fetch('public/data/chartData.json');
         const chartData = await chartRes.json();
 
         const chartList = document.getElementById('chart-list');
