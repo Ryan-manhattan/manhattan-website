@@ -4,6 +4,7 @@ export default async function handler(req, res) {
   }
 
   const { artist, track } = req.body;
+  console.log("✅ API 키 확인:", !!process.env.OPENAI_API_KEY);
 
   const prompt = track
     ? `아티스트 ${artist}의 곡 '${track}'에 담긴 감정, 주제, 정치·철학적 메시지를 간략히 분석해줘. 가사: \${song_lyrics.slice(0, 400)} / 배경: \${background.slice(0, 400)}`
