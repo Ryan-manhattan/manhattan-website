@@ -17,11 +17,11 @@ export default async function handler(req, res) {
    - 곡 제목: ${track}
    - 발매 연도: {release_year}
    - 장르: {genre}
-   - 가사: {song_lyrics.slice(0, 1000)
-   - 곡 배경 및 작곡 의도: {background.slice(0, 1000)
+   - 가사: {song_lyrics.slice(0, 400)
+   - 곡 배경 및 작곡 의도: {background.slice(0, 400)
 
 2. 분석 도구를 사용하여 다음을 평가합니다:
-   - 정치적 메시지: <function_call>political_analysis_tool(background="{background}", song_lyrics="{song_lyrics}")</function_call>
+   - 정치적 메시지: <function_call>political_analysis_tool(background="{background.slice(0, 400)", song_lyrics="{song_lyrics.slice(0, 400)")</function_call>
    - 철학적 메시지: <function_call>philosophical_analysis_tool(background="{background}", song_lyrics="{song_lyrics}")</function_call>
 
 3. 분석 결과를 통합하여 간결한 보고서를 작성합니다:
