@@ -92,7 +92,7 @@
 <a href="../index.html" class="back">&#8592; Back to Home</a>
 
 <script>
-  fetch("https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=a8c28adb3e8eed2a1078db8b1ba699cf&format=json")
+  fetch("/api/chartData")
     .then(response => response.json())
     .then(data => {
       const fullChart = data.tracks.track.slice(0, 50);
@@ -120,11 +120,7 @@
     currentIndex = (currentIndex + 1) % chartItems.length;
   }
 
-  fetch("https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=a8c28adb3e8eed2a1078db8b1ba699cf&format=json")
-    .then(response => response.json())
-    .then(data => {
-      chartItems = data.tracks.track.slice(0, 50);
-      showAnimatedTrack();
+        showAnimatedTrack();
       setInterval(showAnimatedTrack, 3000);
 
       const fullList = document.getElementById("full-chart");
