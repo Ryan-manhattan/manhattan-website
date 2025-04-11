@@ -151,11 +151,10 @@
 
   async function showInfo(artist, track) {
     const content = document.getElementById("info-content");
-    content.innerHTML = '<span class="loading">정보를 받아오는 중<span class="dots"></span></span>';
+    content.innerHTML = '';
     const link = document.getElementById("info-link");
     const box = document.getElementById("info-box");
 
-    // 먼저 팝업을 표시
     box.style.right = "0";
     box.style.visibility = "visible";
     box.style.opacity = "1";
@@ -171,11 +170,15 @@
 
       const data = await res.json();
       console.log("📦 OpenAI 응답:", data);
+      console.log("📦 OpenAI 응답:", data);
       if (!data || !data.message) {
         throw new Error("응답에 message가 없습니다");
       }
-      content.innerHTML = data.message.split(',').join('<br>');
-      link.href = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
+      if (!data || !data.message) {
+        throw new Error("응답에 message가 없습니다");
+      }
+      content.innerHTML = `<strong>AI 분석 결과:</strong><br><br>${data.message}`;
+      link.href = `https://www.perplexity.ai/search?q=${encodeURIComponent(track ? artist + ' ' + track : artist)}`;
       box.style.right = "0";
       box.style.visibility = "visible";
       box.style.opacity = "1";
