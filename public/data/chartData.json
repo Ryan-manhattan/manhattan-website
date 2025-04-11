@@ -1,1 +1,25 @@
+{
+  "tracks": [
+    {
+      "name": "Blinding Lights",
+      "artist": { "name": "The Weeknd" }
+    },
+    {
+      "name": "As It Was",
+      "artist": { "name": "Harry Styles" }
+    },
+    {
+      "name": "Levitating",
+      "artist": { "name": "Dua Lipa" }
+    },
+    {
+      "name": "Anti-Hero",
+      "artist": { "name": "Taylor Swift" }
+    },
+    {
+      "name": "Stay",
+      "artist": { "name": "The Kid LAROI" }
+    }
+  ]
+}
 
