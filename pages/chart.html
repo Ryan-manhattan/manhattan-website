@@ -33,26 +33,19 @@
     }
 
     li {
-  margin: 0;
-  padding: 16px 28px;
-  background-color: #111;
-  border-radius: 0;
-  width: 100vw;
-  font-size: 1.2rem;
-  text-align: left;
-  border-bottom: 1px solid #333;
-  box-shadow: none;
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.6s ease;
-  font-size: 1.2rem;
-  text-align: left;
-  border-bottom: 1px solid #333;
-  box-shadow: none;
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.6s ease;
-}
+      margin: 0;
+      padding: 16px 28px;
+      background-color: #111;
+      border-radius: 0;
+      width: 100vw;
+      font-size: 1.2rem;
+      text-align: left;
+      border-bottom: 1px solid #333;
+      box-shadow: none;
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.6s ease;
+    }
 
     a.back {
       margin-top: 40px;
@@ -126,7 +119,6 @@
         <div style="font-size: 1.4rem; font-weight: bold; color: #fff; cursor: pointer;" onclick="showInfo('${track.artist.name}', '${track.name}')">${track.name}</div>
       </div>
     </div>
-    
   </div>
 </li>
       `).join('');
@@ -134,19 +126,12 @@
     .catch(() => {
       document.getElementById("full-chart").innerHTML = "<li>Failed to load full chart.</li>";
     });
-</script>
 
-
-<div id="info-box" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #111; color: #fff; padding: 20px 30px; border: 1px solid #444; border-radius: 8px; box-shadow: 0 0 10px rgba(255,255,255,0.1); z-index: 1000; max-width: 90vw; font-size: 1rem; text-align: center;">
-  <div id="info-content"></div>
-  <a id="info-link" href="#" target="_blank" style="display: inline-block; margin-top: 10px; color: #e0b0ff; text-decoration: underline; font-size: 0.95rem;">Perplexity에서 검색하기</a>
-</div>
-
-<script>
   async function showInfo(artist, track) {
     const content = document.getElementById("info-content");
+    const link = document.getElementById("info-link");
     const box = document.getElementById("info-box");
-    content.textContent = "정보 불러오는 중...";
+    const query = track ? `${artist} ${track} 음악 정보를 알려줘` : `${artist} 아티스트에 대해 알려줘`;
 
     try {
       const res = await fetch("/api/aiInfo", {
@@ -158,7 +143,8 @@
       });
 
       const data = await res.json();
-      content.textContent = data.message || "정보를 가져오지 못했습니다.";
+      content.innerHTML = (data.message || "정보를 가져오지 못했습니다.").split(',').join('<br>');
+      link.href = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
       box.style.display = "block";
     } catch (err) {
       content.textContent = "정보 요청 중 오류가 발생했습니다.";
@@ -166,5 +152,10 @@
     }
   }
 </script>
+
+<div id="info-box" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #111; color: #fff; padding: 20px 30px; border: 1px solid #444; border-radius: 8px; box-shadow: 0 0 10px rgba(255,255,255,0.1); z-index: 1000; max-width: 90vw; font-size: 1rem; text-align: center;">
+  <div id="info-content"></div>
+  <a id="info-link" href="#" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 10px; color: #e0b0ff; text-decoration: underline; font-size: 0.95rem;">Perplexity에서 검색하기</a>
+</div>
 </body>
 </html>
